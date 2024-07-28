@@ -83,6 +83,7 @@ def harvest_column(item):
 				if get_entity_type() == Entities.Hedge:
 					solve_maze()
 					return_to_start()
+					sunflower_count["value"] = 0
 					break		
 					
 			if can_harvest():
@@ -127,27 +128,35 @@ def harvest_column(item):
 				continue
 			if check_soil():
 				plant(Entities.Sunflower)
-				sunflower_values[tile] = None
+				sunflower_values[sunflower_count["value"]] = measure()
+				sunflower_count["value"] += 1
 				move(North)
 				continue
 				
 			if get_entity_type() != Entities.Sunflower:
 				plant(Entities.Sunflower)
+				sunflower_values[sunflower_count["value"]] = measure()
+				sunflower_count["value"] += 1
 				move(North)
-				sunflower_values[tile] = None
 				continue
 
 			petal_count = measure()
-			sunflower_values[tile] = petal_count
+			sunflower_values[sunflower_count["value"]] = petal_count
 			
 			# We dont have all sunflowers ready yet, skip
 			if None in sunflower_values:
+				sunflower_count["value"] += 1
 				move(North)
 				continue
 				
 			if max(sunflower_values) == petal_count and can_harvest():
 				harvest()
 				plant(Entities.Sunflower)
+				sunflower_values[sunflower_count["value"]] = measure()
+				sunflower_count["value"] += 1
+			else:
+				sunflower_count["value"] += 1
+				
 				
 				
 
@@ -156,3 +165,6 @@ def harvest_column(item):
 				harvest()
 		
 		move(North)
+			
+		
+	
