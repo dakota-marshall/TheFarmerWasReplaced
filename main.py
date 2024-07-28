@@ -2,20 +2,23 @@ return_to_start()
 
 # Sunflower global
 sunflower_values = []
+sunflower_count = { "value": 0 }
 for flower in range(get_world_size()):
-	sunflower_values.insert(flower, None)
+	sunflower_values.append(None)
+	sunflower_values.append(None)
 
 while True:
 	
 	plant_order = [
 		"tree",
 		"carrot", 
-		"tree",
-		"pumpkin",
-		"pumpkin",
-		"pumpkin",
 		"sunflower",
-		"grass"
+		"sunflower",
+		"pumpkin",
+		"pumpkin",
+		"pumpkin",
+		"grass",
+		"carrot"
 	]
 	
 	drone_col = get_pos_x()
@@ -26,3 +29,6 @@ while True:
 	harvest_column(plant_order[drone_col])
 	
 	move(East)
+	
+	if get_pos_x() == 0:
+		sunflower_count["value"] = 0
